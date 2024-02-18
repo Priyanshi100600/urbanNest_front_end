@@ -3,11 +3,15 @@ import Toast from "../components/Toast";
 import { useQuery } from "react-query";
 import * as apiClient from "../api-client";
 
+<<<<<<< HEAD
 // Define type for the toast message
+=======
+>>>>>>> origin/master
 type ToastMessage = {
   message: string;
   type: "SUCCESS" | "ERROR";
 };
+<<<<<<< HEAD
 
 // Define type for the AppContext
 type AppContext = {
@@ -43,6 +47,34 @@ export const AppContextProvider = ({
       }}
     >
       {/* Render Toast component if toast message exists */}
+=======
+type AppContext = {
+  showToast: (toastMessage: ToastMessage) => void;
+  isLoggedIn: boolean;
+};
+
+const AppContext = React.createContext<AppContext | undefined>(undefined);
+
+export const AppContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
+
+  const { isError } = useQuery("validateToken", apiClient.validateToken, {
+    retry: false,
+  });
+  return (
+    <AppContext.Provider
+      value={{
+        showToast: (toastMessage) => {
+          setToast(toastMessage);
+        },
+        isLoggedIn: !isError,
+      }}
+    >
+>>>>>>> origin/master
       {toast && (
         <Toast
           message={toast.message}
@@ -50,6 +82,7 @@ export const AppContextProvider = ({
           onClose={() => setToast(undefined)}
         />
       )}
+<<<<<<< HEAD
       {children} {/* Render children components */}
     </AppContext.Provider>
   );
@@ -59,4 +92,15 @@ export const AppContextProvider = ({
 export const useAppContext = () => {
   const context = useContext(AppContext);
   return context as AppContext; // Return AppContext
+=======
+      {children}
+    </AppContext.Provider>
+    
+  );
+};
+
+export const useAppContext = () => {
+  const context = useContext(AppContext);
+  return context as AppContext;
+>>>>>>> origin/master
 };

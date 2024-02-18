@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import "../css/urbanNest.css";
 
+<<<<<<< HEAD
 // Define the type for the parameters received from the URL
 interface ResetPasswordParams {
   token: string | undefined; // The reset token
@@ -22,16 +26,39 @@ const ResetPassword = () => {
   // Function to handle resetting password
   const handleResetPassword = async () => {
     // Check if password or confirm password is empty
+=======
+interface ResetPasswordParams {
+  token: string | undefined;
+  [key: string]: string | undefined;
+}
+
+const ResetPassword = () => {
+  const { showToast } = useAppContext();
+
+  const { token } = useParams<ResetPasswordParams>();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleResetPassword = async () => {
+>>>>>>> origin/master
     if (!password || !confirmPassword) {
       showToast({
         message: `Enter both passwords!`,
         type: "ERROR",
       });
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
       console.error("Please enter both password and confirm password");
       return;
     }
 
+<<<<<<< HEAD
     // Check if password matches confirm password
+=======
+>>>>>>> origin/master
     if (password !== confirmPassword) {
       showToast({
         message: `Passwords do not match`,
@@ -42,6 +69,7 @@ const ResetPassword = () => {
     }
 
     try {
+<<<<<<< HEAD
       // Make a request to reset the password
       const response = await fetch(
         `http://localhost:3000/api/auth/reset-password/${token}`, // URL for resetting password
@@ -55,15 +83,36 @@ const ResetPassword = () => {
       );
 
       // If the request is successful
+=======
+      const response = await fetch(
+        `http://localhost:3000/api/auth/reset-password/${token}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ password }),
+        }
+      );
+
+>>>>>>> origin/master
       if (response.ok) {
         showToast({
           message: `Password reset Successful!`,
           type: "SUCCESS",
         });
+<<<<<<< HEAD
         navigate("/sign-in"); // Navigate to sign-in page
       } else {
         // If there's an error, display error message
         const responseData = await response.json();
+=======
+
+        navigate("/sign-in");
+      } else {
+        const responseData = await response.json();
+
+>>>>>>> origin/master
         showToast({
           message: `Failed to reset password`,
           type: "ERROR",
@@ -75,7 +124,10 @@ const ResetPassword = () => {
     }
   };
 
+<<<<<<< HEAD
   // Render the reset password form
+=======
+>>>>>>> origin/master
   return (
     <div className="flex flex-col items-center mt-10">
       <h2 className="text-2xl text-orange font-bold mb-4">
@@ -102,4 +154,8 @@ const ResetPassword = () => {
   );
 };
 
+<<<<<<< HEAD
 export default ResetPassword; 
+=======
+export default ResetPassword;
+>>>>>>> origin/master
